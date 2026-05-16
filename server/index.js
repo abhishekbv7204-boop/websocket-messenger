@@ -3,11 +3,9 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-
 app.use(cors());
 
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -40,7 +38,6 @@ io.on("connection", (socket) => {
       userCount: roomUsers[room].size,
     });
   });
-
   socket.on("send_message", (data) => {
     // Broadcast message to everyone in the room including sender
     io.to(data.room).emit("receive_message", data);
@@ -67,7 +64,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT=process.env.PORT || 3001;
 
 server.listen(PORT, () => {
   console.log(`SERVER RUNNING ON PORT ${PORT}`);
